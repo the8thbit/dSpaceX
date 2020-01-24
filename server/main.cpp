@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
   OptionParser parser = OptionParser().description("dSpaceX Server");
   parser.add_option("-p", "--port").dest("port").type("int").set_default(kDefaultPort).help("server port");
   parser.add_option("-d", "--datapath").dest("datapath").set_default(kDefaultDatapath).help("path to datasets");
+  parser.add_option("--savepartitions").dest("savecrystalpartitions").type("bool").set_default(false).help("save the crystal partitions");
 
   const optparse::Values &options = parser.parse_args(argc, argv);
   const std::vector<std::string> args = parser.args();
@@ -32,7 +33,7 @@ int main(int argc, char *argv[])
   std::string datapath = options["datapath"];
   
   try {
-    controller = new Controller(datapath);
+    controller = new Controller(datapath);//, savepartitions);
   } catch (const std::exception &e) {
     std::cout << e.what() << std::endl;
     return 1;
